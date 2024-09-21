@@ -1,4 +1,4 @@
 all:
-	 g++ main.cpp board.cpp coin.cpp -o test
+	g++ *.cpp -Isrc/include -Iinclude -o bin/main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system
 	 cls
-	./test 
+	./bin/main 
