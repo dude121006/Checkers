@@ -11,6 +11,8 @@ int main()
     Board board;
 
     board.PrintBoard();
+    // board.MoveCoins(2, 3);
+    // board.PrintBoard();
 
     return 0;
 } 

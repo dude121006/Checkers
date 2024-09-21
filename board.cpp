@@ -40,7 +40,7 @@ void Board::MoveCoins(int initialPos, int finalPos)
         if (GetCoinFromIndex(initialPos).GetColor() == Empty)
         { 
             cout << "Choose a non empty Coin" << endl;
-        }
+    }
 
         else
         {
