@@ -12,6 +12,7 @@ Coin::Coin(int choice)
 
 }
 
+// returns the color of the Coin as a CHAR
 char Coin::GetColor()
 {
     if (color == Black)
@@ -21,6 +22,7 @@ char Coin::GetColor()
     return 'E';
 }
 
+// returns the color of the Coin as an ENUM
 Color Coin::GetEnumColor()
 {
     return color;

@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "board.h"
 #include "coin.h"
+#include "renderer.h"
 
 
 void Print(char x)
@@ -13,17 +14,16 @@ void Print(char x)
 int main()
 {
     Board board;
+    Renderer renderer(board);
 
-    board.PrintBoard();
-    board.MoveCoins(2, 3);
-    board.PrintBoard();
-    board.MoveCoins(4, 2);
-    board.PrintBoard();
 
-    int boxWidth = 200;
+    // board.PrintBoard();
+    // board.MoveCoins(2, 3);
+    // board.PrintBoard();
+    // board.MoveCoins(4, 2);
+    // board.PrintBoard();
 
-    //window stuff
-    sf::RenderWindow window(sf::VideoMode(boxWidth * 7, boxWidth), "Checkers");
+    sf::RenderWindow window(sf::VideoMode(renderer.numRows * renderer.boxSize, renderer.boxSize), "Checkers");
     
 
     // main game loop
@@ -41,7 +41,7 @@ int main()
         window.clear();
 
         //render stuff to window
-
+        renderer.render(window);
 
         window.display();
     }
