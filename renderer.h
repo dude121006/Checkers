@@ -25,6 +25,7 @@ public:
     Renderer(Board& board);
 
     void Render(sf::RenderWindow& window);
+    void UpdateRenderer(Board& board);
     void InitSprites();
 };
 

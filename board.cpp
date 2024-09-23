@@ -30,6 +30,12 @@ void Board::SwapCoins(int initialPos, int finalPos)
     board[initialPos] = tempCoin;
 }
 
+// move coins with a vector having init and final positions
+void Board::MoveCoins(std::vector<int> pos)
+{
+    MoveCoins(pos[0], pos[1]);
+}
+
 // Move a coin with its init. and final index
 void Board::MoveCoins(int initialPos, int finalPos)
 {
@@ -38,7 +44,7 @@ void Board::MoveCoins(int initialPos, int finalPos)
         cout << "Positions out of bounds" << endl;
         return;
     }
-    if (GetCoinFromIndex(initialPos).GetColor() == Empty)
+    if (GetCoinFromIndex(initialPos).GetEnumColor() == Empty)
     {
         cout << "Choose a non empty Coin" << endl;
         return;
@@ -72,12 +78,26 @@ void Board::MoveCoins(int initialPos, int finalPos)
     {
         cout << "Final coin too far" << endl;
     }
+
+    
 }
 
 Coin Board::GetCoinFromIndex(int index)
 {
     return board[index];
 }
+
+// takes in a vector of positions, return a vector of indices
+std::vector<int> Board::ConvertPositionsToIndex(std::vector<sf::Vector2i> vec, int size)
+{
+    std::vector<int> vec2;
+    for (auto i : vec)
+    {
+        vec2.push_back(i.x / size);
+    }
+    return vec2;
+}
+
 
 // checks if a coin can jump over a coin of opposite color
 bool Board::isValidJump(int initPos, int finalPos)
