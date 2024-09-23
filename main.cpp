@@ -16,12 +16,11 @@ int main()
     Board board;
     Renderer renderer(board);
 
-
-    // board.PrintBoard();
-    // board.MoveCoins(2, 3);
-    // board.PrintBoard();
-    // board.MoveCoins(4, 2);
-    // board.PrintBoard();
+    board.PrintBoard();
+    board.MoveCoins(2, 3);
+    board.PrintBoard();
+    board.MoveCoins(4, 2);
+    board.PrintBoard();
 
     sf::RenderWindow window(sf::VideoMode(renderer.numRows * renderer.boxSize, renderer.boxSize), "Checkers");
     
@@ -41,7 +40,7 @@ int main()
         window.clear();
 
         //render stuff to window
-        renderer.render(window);
+        renderer.Render(window);
 
         window.display();
     }

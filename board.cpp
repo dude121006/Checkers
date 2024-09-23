@@ -96,7 +96,7 @@ bool Board::isFinalDestinationEmpty(int dest)
 
 bool Board::isInBounds(int index)
 {
-    if (index >= 0 && index <= board.size())
+    if (index >= 0 && index < board.size())
         return true;
     else
         return false;
