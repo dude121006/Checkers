@@ -4,10 +4,11 @@
 #include "coin.h"
 #include "renderer.h"
 
-void Print(char x)
-{
-    std::cout << x << std::endl;
-}
+//? UPDATE: coin movement bounds
+//TODO: add text support
+//TODO: game logic
+//TODO: better input controls
+//TODO: Add setup files
 
 int main()
 {
@@ -18,14 +19,12 @@ int main()
     std::vector<sf::Vector2i> coinPositions;
     std::vector<int> coinIndices;
     sf::Vector2i windowRelativePos;
+    int numSteps = 0;
+    int textSpace = 60;
 
     board.PrintBoard();
-    board.MoveCoins(2, 3);
-    board.PrintBoard();
-    board.MoveCoins(4, 2);
-    board.PrintBoard();
 
-    sf::RenderWindow window(sf::VideoMode(renderer.numRows * renderer.boxSize, renderer.boxSize), "Checkers");
+    sf::RenderWindow window(sf::VideoMode(renderer.numRows * renderer.boxSize, renderer.boxSize + textSpace), "Checkers");
 
     // main game loop
     while (window.isOpen())
@@ -64,6 +63,10 @@ int main()
             board.MoveCoins(coinIndices); 
             coinIndices.clear();
             coinPositions.clear();
+
+            //update count
+            numSteps++;
+            std::cout << numSteps << std::endl;
         }
         renderer.UpdateRenderer(board);
 
@@ -71,7 +74,7 @@ int main()
 //*========================================================================================================
 
         // clear the window
-        window.clear();
+        window.clear(sf::Color::White);
 
         // render stuff to window
         renderer.Render(window);

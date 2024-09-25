@@ -4,6 +4,11 @@ Renderer::Renderer(Board &board) : numRows(7), boxSize(200)
 {
     InitSprites();
     UpdateRenderer(board);
+
+    if (!font.loadFromFile("assets/JETBRAINSMONONERDFONT-REGULAR.ttf"))
+    {
+        std::cout << "Couldn't load font!" << "\n";
+    }
 }
 
 void Renderer::InitSprites()
@@ -27,47 +32,50 @@ void Renderer::InitSprites()
 
 }
 
+void Renderer::InitText()
+{
+    text.setFont(font);
+    text.setString("HELLO");
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::Red);  
+}
+
 
 void Renderer::Render(sf::RenderWindow &window)
 {
     for (int x = 0; x < numRows; x++)
     {
-        window.draw(grid[x]);
+        window.draw(grid[x].shape);
         window.draw(spriteList[x]);
+        window.draw(grid[x].cellNum);
     }
 }
 
 void Renderer::UpdateRenderer(Board& board)
 {
+    spriteList.resize(numRows);
+    grid.clear();
+
     for (int x = 0; x < numRows; x++)
     {
-        spriteList.resize(numRows);
-        grid.resize(numRows);
-
-        Color coinColor = board.GetCoinFromIndex(x).GetEnumColor();
-        sf::Color grey(128, 128, 128, 255);
-
-        //static casting to convert the position to an exact integer (to solve rendering issues)
-        grid[x].setPosition(sf::Vector2f(static_cast<int>(x * boxSize), 0));
-        grid[x].setSize(sf::Vector2f(boxSize, boxSize));
-        grid[x].setOutlineThickness(10.0f);
-        grid[x].setOutlineColor(grey);
+        grid.push_back(GridCell(x, boxSize, font));
 
         // set grid color based on the cell color
-        if (coinColor == White)
+        Color coinColor = board.GetCoinFromIndex(x).GetEnumColor();
+
+        switch (coinColor)
         {
+        case (White):
             spriteList[x] = (whiteCoinSprite);
-            grid[x].setFillColor(sf::Color::White);
-        }
-        else if (coinColor == Black)
-        {
+            break;
+        
+        case (Black):
             spriteList[x] = (blackCoinSprite);
-            grid[x].setFillColor(sf::Color::White);
-        }
-        else
-        {
+            break;
+
+        default:
             spriteList[x] = (transparentCoinSprite);
-            grid[x].setFillColor(sf::Color::White);
+            break;
         }
 
 

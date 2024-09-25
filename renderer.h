@@ -1,4 +1,5 @@
 #pragma once
+#include "gridCell.h"
 #include "SFML/Graphics.hpp"
 #include "board.h"
 
@@ -10,7 +11,7 @@ public:
     int boxSize;
     int numRows;
 
-    std::vector<sf::RectangleShape> grid;
+    std::vector<GridCell> grid;
     std::vector<sf::Sprite> spriteList;
 
     sf::Texture whiteCoinTexture;
@@ -21,11 +22,15 @@ public:
     sf::Sprite blackCoinSprite;
     sf::Sprite transparentCoinSprite;
 
+    sf::Font font;
+    sf::Text text;
+
 public:
     Renderer(Board& board);
 
     void Render(sf::RenderWindow& window);
     void UpdateRenderer(Board& board);
     void InitSprites();
+    void InitText();
 };
 
