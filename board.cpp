@@ -82,10 +82,12 @@ void Board::MoveCoins(int initialPos, int finalPos)
     
 }
 
+
 Coin Board::GetCoinFromIndex(int index)
 {
     return board[index];
 }
+
 
 // takes in a vector of positions, return a vector of indices
 std::vector<int> Board::ConvertPositionsToIndex(std::vector<sf::Vector2i> vec, int size)
@@ -98,6 +100,10 @@ std::vector<int> Board::ConvertPositionsToIndex(std::vector<sf::Vector2i> vec, i
     return vec2;
 }
 
+int Board::ConvertPositionToIndex(int pos, int size)
+{
+    return pos/ size;
+}
 
 // checks if a coin can jump over a coin of opposite color
 bool Board::isValidJump(int initPos, int finalPos)

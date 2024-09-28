@@ -12,6 +12,7 @@ public:
     int numRows;
 
     std::vector<GridCell> grid;
+    std::vector<bool> selectedStates;
     std::vector<sf::Sprite> spriteList;
 
     sf::Texture whiteCoinTexture;
@@ -23,7 +24,6 @@ public:
     sf::Sprite transparentCoinSprite;
 
     sf::Font font;
-    sf::Text text;
 
 public:
     Renderer(Board& board);
@@ -31,6 +31,7 @@ public:
     void Render(sf::RenderWindow& window);
     void UpdateRenderer(Board& board);
     void InitSprites();
-    void InitText();
+    void InitGrid();
+    void UnselectAll();
 };
 

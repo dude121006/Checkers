@@ -53,21 +53,34 @@ int main()
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
                     coinPositions.push_back(windowRelativePos);
+
+                    if (coinPositions.size() == 1)
+                    {
+                        coinIndices = board.ConvertPositionsToIndex(coinPositions, renderer.boxSize);
+                        renderer.grid[coinIndices[0]].isSelected = true;
+                        // renderer.grid[0].isSelected = true;
+                        std::cout << coinIndices[0] << std::endl;
+                    }
+                    else if (coinPositions.size() == 2)
+                    {
+                        coinIndices = board.ConvertPositionsToIndex(coinPositions, renderer.boxSize);
+                        board.MoveCoins(coinIndices); 
+
+                        coinIndices.clear();
+                        coinPositions.clear();
+                        renderer.UnselectAll();
+
+                        //update count
+                        numSteps++;
+                        // std::cout << numSteps << std::endl;
+                    }
+
+                    //* =-=-=-=-=-
+
                 }
             }
         }
 
-        if (coinPositions.size() == 2)
-        {
-            coinIndices = board.ConvertPositionsToIndex(coinPositions, renderer.boxSize);
-            board.MoveCoins(coinIndices); 
-            coinIndices.clear();
-            coinPositions.clear();
-
-            //update count
-            numSteps++;
-            std::cout << numSteps << std::endl;
-        }
         renderer.UpdateRenderer(board);
 
 

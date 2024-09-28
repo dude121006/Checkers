@@ -3,6 +3,7 @@
 Renderer::Renderer(Board &board) : numRows(7), boxSize(200)
 {
     InitSprites();
+    InitGrid();
     UpdateRenderer(board);
 
     if (!font.loadFromFile("assets/JETBRAINSMONONERDFONT-REGULAR.ttf"))
@@ -29,17 +30,20 @@ void Renderer::InitSprites()
     whiteCoinSprite.setTexture(whiteCoinTexture);
     blackCoinSprite.setTexture(blackCoinTexture);
     transparentCoinSprite.setTexture(transparentCoinTexture);
+    // transparentCoinSprite.setColor(sf::Color::White);
 
 }
 
-void Renderer::InitText()
+// initialize grid once
+void Renderer::InitGrid()
 {
-    text.setFont(font);
-    text.setString("HELLO");
-    text.setCharacterSize(50);
-    text.setFillColor(sf::Color::Red);  
+    grid.resize(numRows);
+    for (int x = 0; x < numRows; x++)
+    {
+        grid[x] = GridCell(x, boxSize, font);
+    }
+    
 }
-
 
 void Renderer::Render(sf::RenderWindow &window)
 {
@@ -53,12 +57,26 @@ void Renderer::Render(sf::RenderWindow &window)
 
 void Renderer::UpdateRenderer(Board& board)
 {
-    spriteList.resize(numRows);
-    grid.clear();
+    // store the isSelected states in a vector
+    selectedStates.clear();
+    for (const auto &cell : grid)
+    {
+        selectedStates.push_back(cell.isSelected);
+    }
 
+    // reinitialize the coin sprite lists and grid vector
+    spriteList.resize(numRows);
+    // grid.resize(numRows);
+
+    // set the sprites and grid properties
     for (int x = 0; x < numRows; x++)
     {
-        grid.push_back(GridCell(x, boxSize, font));
+        grid[x].UpdateGridCell(x, boxSize, font);
+
+        // if (x < selectedStates.size())
+        // { 
+        //     grid[x].isSelected = selectedStates[x]; // for safety
+        // }
 
         // set grid color based on the cell color
         Color coinColor = board.GetCoinFromIndex(x).GetEnumColor();
@@ -82,6 +100,17 @@ void Renderer::UpdateRenderer(Board& board)
         sf::Vector2u size = blackCoinTexture.getSize();
         spriteList[x].setPosition(sf::Vector2f(x * boxSize, 0));
         spriteList[x].setScale(sf::Vector2f(static_cast<float>( boxSize ) / size.x, (static_cast<float>( boxSize ) / size.y)));
-        // spriteList[x].setScale(sf::Vector2f(( boxSize ) / size.x, (( boxSize ) / size.y)));
+
+        //updating the cellNumColors
+        // grid[x].UpdateCellNumColor();
+    }
+}
+
+
+void Renderer::UnselectAll()
+{
+    for (int i = 0; i < grid.size(); i++)
+    {
+        grid[i].isSelected = false;
     }
 }
